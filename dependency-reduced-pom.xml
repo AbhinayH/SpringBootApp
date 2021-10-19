@@ -7,7 +7,7 @@
     <relativePath>pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>net.javaguides</groupId>
+  <groupId>abhinay.demo</groupId>
   <artifactId>springboot-backend</artifactId>
   <name>springboot-backend</name>
   <version>0.0.1-SNAPSHOT</version>

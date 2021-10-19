@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,11 +28,14 @@ import com.example.springboot.repository.ParentRepository;
 @RestController
 @RequestMapping("/api/v1/")
 public class MyController {
+	
 
 	@Autowired
 	private ParentRepository repository;
 	
 	CRUDOperationsDTO obj = new CRUDOperationsDTO();
+	
+	Logger logger = LoggerFactory.getLogger(MyController.class);
 	
 //	@Autowired
 //	private ChildRepository childRepository;	
@@ -38,6 +43,7 @@ public class MyController {
 	// get all parents
 	@GetMapping("/getAll")
 	public List<Parent> getAllData(){
+		logger.info("getAllData is called");
 		obj.displayAll(repository);
 		return repository.findAll();
 	}		
@@ -45,12 +51,14 @@ public class MyController {
 	// create parent rest api
 	@PostMapping("/createParent")
 	public Parent createParent(@RequestBody Parent parent) {
+		logger.info("create Parent is called");
 		return repository.save(parent);
 	}
 	
 	// get parent by id rest api
 	@GetMapping("/parent/{id}")
 	public ResponseEntity<Parent> getParentById(@PathVariable Long id) {
+		logger.info("getParentById is called");
 		Parent parent = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Data not exist with id :" + id));
 		return ResponseEntity.ok(parent);
@@ -59,6 +67,8 @@ public class MyController {
 	// update data rest api	
 	@PutMapping("/parent/{id}")
 	public ResponseEntity<Parent> updateData(@PathVariable Long id, @RequestBody Parent parentDetails){
+		logger.info("updateData is called");
+		
 		Parent parent = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Data not exist with id :" + id));
 		
@@ -72,6 +82,8 @@ public class MyController {
 	// delete data rest api
 	@DeleteMapping("/parent/{id}")
 	public ResponseEntity<Map<String, Boolean>> deleteData(@PathVariable Long id){
+		logger.info("deleteData is called");
+		
 		Parent parent = repository.findById(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Data not exist with id :" + id));
 		
